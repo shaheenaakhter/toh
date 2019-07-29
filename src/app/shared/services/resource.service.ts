@@ -20,7 +20,7 @@ export class ResourceService<T extends Resource>{
     private messageService: MessageService,
     private url: string) { }
 
-  /** GET heroes from the server */
+  /** GET items from the server */
   getItems (): Observable<T[]> {
     return this.http.get<T[]>(this.url)
       .pipe(
@@ -29,7 +29,7 @@ export class ResourceService<T extends Resource>{
       );
   }
 
-  /** GET hero by id. Return `undefined` when id not found */
+  /** GET item by id. Return `undefined` when id not found */
   getItemNo404<Data>(id: number): Observable<T> {
     const url = `${this.url}/?id=${id}`;
     return this.http.get<T>(url)
@@ -43,7 +43,7 @@ export class ResourceService<T extends Resource>{
       );
   }
 
-  /** GET hero by id. Will 404 if id not found */
+  /** GET item by id. Will 404 if id not found */
   getItem(id: number): Observable<T> {
     const url = `${this.url}/${id}`;
     return this.http.get<T>(url).pipe(
@@ -52,7 +52,7 @@ export class ResourceService<T extends Resource>{
     );
   }
 
-  /* GET heroes whose name contains search term */
+  /* GET items whose name contains search term */
   searchItems(term: string): Observable<T[]> {
     if (!term.trim()) {
       // if not search term, return empty hero array.
@@ -66,7 +66,7 @@ export class ResourceService<T extends Resource>{
 
   //////// Save methods //////////
 
-  /** POST: add a new hero to the server */
+  /** POST: add a new item to the server */
   addItem (item: T): Observable<T> {
     return this.http.post<T>(this.url, item, this.httpOptions).pipe(
       tap((newItem: T) => this.log(`added item w/ id=${newItem.id}`)),
@@ -74,7 +74,7 @@ export class ResourceService<T extends Resource>{
     );
   }
 
-  /** DELETE: delete the hero from the server */
+  /** DELETE: delete the item from the server */
   deleteItem (item: T | number): Observable<T> {
     const id = typeof item === 'number' ? item : item.id;
     const url = `${this.url}/${id}`;
@@ -85,7 +85,7 @@ export class ResourceService<T extends Resource>{
     );
   }
 
-  /** PUT: update the hero on the server */
+  /** PUT: update the item on the server */
   updateItem (item: T): Observable<T> {
     return this.http.put(this.url, item, this.httpOptions).pipe(
       tap(_ => this.log(`updated item id=${item.id}`)),

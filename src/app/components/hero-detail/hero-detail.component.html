@@ -6,6 +6,16 @@
       <input [(ngModel)]="hero.name" placeholder="name"/>
     </label>
   </div>
+  
+  <div>
+    <label>namesies:
+      <select [(ngModel)]="hero.villainId">
+        <option *ngFor="let option of villains" [value]="option.id">
+          {{option.name}}
+        </option>
+      </select>
+    </label>
+  </div>
   <button (click)="goBack()">go back</button>
   <button (click)="save()">save</button>
 </div>
